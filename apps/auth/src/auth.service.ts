@@ -3,6 +3,7 @@ import { UserDocument } from './users/models/user.schema';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { TokenPayload } from './interfaces/token-payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -11,8 +12,10 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  // Log the user in by setting a cookie on Authorization with the JWT
+  // The cookie is set to expire after a certain amount of time, based off of the env var
   async login(user: UserDocument, response: Response) {
-    const tokenPayload = {
+    const tokenPayload: TokenPayload = {
       userId: user._id.toHexString(),
     };
     const expires = new Date();

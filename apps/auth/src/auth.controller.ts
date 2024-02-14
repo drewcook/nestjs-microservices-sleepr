@@ -9,6 +9,8 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  // Use the local auth guard to validate the user's credentials
+  // If the user is valid, log them in and send the user object back
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(
